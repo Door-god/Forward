@@ -1,0 +1,28 @@
+1.多表联合查询以多条件分类以总量降序，构建新表X
+
+SELECT SUM(X.num),X.SellerDeptID,X.PolicyOfficeCode
+FROM
+(
+SELECT COUNT(1) as num,SellerDeptID,PolicyOfficeCode FROM InterOutOrder.OutOrder201602 WHERE MainDisplayID='30' AND SubDisplayID='8' 
+GROUP BY SellerDeptID,PolicyOfficeCode 
+UNION ALL
+SELECT COUNT(1) as num,SellerDeptID,PolicyOfficeCode FROM InterOutOrder.OutOrder201603 WHERE MainDisplayID='30' AND SubDisplayID='8' 
+GROUP BY SellerDeptID,PolicyOfficeCode 
+) 
+as X GROUP BY X.SellerDeptID,X.PolicyOfficeCode ORDER BY SUM(X.num) DESC
+
+
+2.以B表的查询结果作为A的查询条件
+SELECT KeyID FROM InterPolicyDB.InterPolicy
+WHERE Carrier='MU' AND KeyID IN 
+(SELECT MainPolicyID FROM InterPolicyDB.InterPolicyReward WHERE SupplierID IN ('243427','291974') AND IsDelete='0' AND IsUsePTAgencyFee='0')
+   
+  DB开发说IN一个新表没有索引很慢，要这样写
+  SELECT KeyID FROM InterPolicyDB.InterPolicy as I 
+Inner join InterPolicyDB.InterPolicyReward as r on i.KeyID=r. MainPolicyID WHERE i.Carrier='MU' 
+And r. SupplierID IN ('61803','61719') AND r.IsDelete='0' AND r.IsUsePTAgencyFee='0'
+
+
+3.模糊查询（like "%xxxx%"）
+SELECT SupplierID,MainPolicyID,TicketLimit FROM InterPolicyDB.InterPolicyLimit
+WHERE IsDelete='0' AND  TicketLimit like "%关键字%"
