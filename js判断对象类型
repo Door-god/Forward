@@ -1,0 +1,26 @@
+判断对象类型三种方式：
+typeof、instanceof、Object.prototype.toString.call
+1.都可以判断一个对象的类型
+2.typeof缺点Array和Null都是返回的object，在实际运用中，typeof一般用来判断对象存不存在或有没有定义。
+3.Object.prototype.toString.call在IE6中undefined,null均为Object
+4.Object.prototype.toString.call（）返回值是大写"[object Function]",typeof()返回值是小写"functiong"
+
+//typeof判断：
+function isFunction1(fn){
+ return typeof(fn) === "function";
+ }
+ 
+//instanceof判断：
+function isFunction2(fn){
+ return fn instanceof Function;
+ }
+ 
+ //Object.prototype.toString.call判断：
+ function isFunction3(fn){
+  eturn Object.prototype.toString.call(fn) === '[object Function]';
+ }
+ 
+ //测试用例：
+ isFunction1(isFunction1);
+ isFunction2(isFunction2);
+ isFunction3(isFunction3);
