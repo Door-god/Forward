@@ -1,0 +1,48 @@
+//js对象深度克隆
+function cloneObject(srcObj){
+	if(typeof(srcObj) != "object" || srcObj === null) return srcObj; //原始类型字符串、数值、bull和函数克隆可直接赋值
+	if(srcObj instanceof Array){                   //数组克隆
+		var y = [];
+		for(var i=1,j=srcObj.length;i<j;i++){       //遍历数组，如果数组的元素是对象且不为空，递归一次克隆，否则对应元素赋值给心数组对应元素
+			if(typeof(srcObj.[i])=="object" && srcObj.[i] ！=null){  
+				y[i]=cloneObject(srcObj[i]);
+			}
+			else
+			{
+				y[i]=srcObj[i];
+			}
+		}
+	}
+	else{                                   
+		var y = {};
+		for(var i in srcObj){                 //对象克隆，与数组类似，遍历、递归、赋值
+			if(typeof(srcObj[i])=="object" && srcObj[i] != null){
+				y[i]=cloneObject(srcObj[i]);
+			}
+			else{
+				y[i]=srcObj[i];
+			}
+		}
+	}
+	return y;
+}
+
+//测试用例
+var srcObj = {
+    a: 1,
+    b: {
+        b1: ["hello", "hi"],
+        b2: "JavaScript"
+    }
+};
+var abObj = srcObj;
+var tarObj = cloneObject(srcObj);
+
+srcObj.a = 2;
+srcObj.b.b1[0] = "Hello";
+
+console.log(abObj.a);
+console.log(abObj.b.b1[0]);
+
+console.log(tarObj.a);      
+console.log(tarObj.b.b1[0]);
