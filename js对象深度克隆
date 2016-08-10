@@ -1,14 +1,15 @@
-//js对象深度克隆
+1.原始类型字符串、数值、bull和函数克隆可直接赋值
+2.数组和复杂对象直接赋值只是赋的引用地址，改变原对象，克隆对象也会改变，需要遍历每一个元素赋值。
+
 function cloneObject(srcObj){
 	if(typeof(srcObj) != "object" || srcObj === null) return srcObj; //原始类型字符串、数值、bull和函数克隆可直接赋值
 	if(srcObj instanceof Array){                   //数组克隆
 		var y = [];
-		for(var i=1,j=srcObj.length;i<j;i++){       //遍历数组，如果数组的元素是对象且不为空，递归一次克隆，否则对应元素赋值给心数组对应元素
-			if(typeof(srcObj.[i])=="object" && srcObj.[i] !=null){  
+		for(var i=0,j=srcObj.length;i<j;i++){      //遍历数组，如果数组的元素是对象且不为空，递归一次克隆，否则对应元素赋值给心数组对应元素
+			if(typeof(srcObj[i])=="object" && srcObj[i] !=null){  
 				y[i]=cloneObject(srcObj[i]);
 			}
-			else
-			{
+			else{
 				y[i]=srcObj[i];
 			}
 		}
