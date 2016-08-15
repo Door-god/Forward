@@ -3,7 +3,7 @@ typeof、instanceof、Object.prototype.toString.call
 1.都可以判断一个对象的类型
 2.typeof缺点Array和Null都是返回的object，在实际运用中，typeof一般用来判断对象存不存在或有没有定义。
 3.Object.prototype.toString.call在IE6中undefined,null均为Object
-4.Object.prototype.toString.call（）返回值是大写"[object Function]",typeof()返回值是小写"functiong"
+4.Object.prototype.toString.call（）返回值是大写"[object Function]",typeof()返回值是小写"function"
 
 //typeof判断：
 function isFunction1(fn){
