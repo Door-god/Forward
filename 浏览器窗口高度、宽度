@@ -1,0 +1,11 @@
+console.log(document.compatMode);	//浏览器采用的渲染方式
+BackCompat：标准兼容模式关闭；用document.body获取
+CSS1Compat：标准兼容模式开启；用document.docunmetElement获取
+
+//以CSS1Compat为例
+var a = window.innerWidth;     	                  //窗口宽，若有滚动条包含滚动条宽度17px,比c多17px，若无滚动条，a=c
+var b = window.innerHeight;			                  //窗口高，若有滚动条包含滚动条高度17px,比d多17px，若无滚动条，b=d
+var c = document.documentElement.clientWidth;     //当前窗口可视就宽度
+var d = document.documentElement.clientHeight;    //当前窗口可视就宽度
+var e = document.documentElement.scrollWidth;     //整个html文档宽度，含滚动条以外看不到的内容宽度
+var f = document.documentElement.scrollHeight;    //整个html文档高度，含滚动条以外看不到的内容高度
