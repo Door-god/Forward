@@ -9,3 +9,10 @@ var c = document.documentElement.clientWidth;     //当前窗口可视就宽度
 var d = document.documentElement.clientHeight;    //当前窗口可视就宽度
 var e = document.documentElement.scrollWidth;     //整个html文档宽度，含滚动条以外看不到的内容宽度
 var f = document.documentElement.scrollHeight;    //整个html文档高度，含滚动条以外看不到的内容高度
+
+
+
+
+
+
+
