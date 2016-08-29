@@ -1,0 +1,75 @@
+1.绝对位置：元素的左上角相对于整张网页左上角的坐标;
+2.相对位置：元素相对浏览器窗口左上角的位置;
+            相对位置 = 绝对位置 - 滚动条滚动距离;
+            reX = abX - scrollLeft; //BackCompat:document.body.scrollLeft; CSS1Compat:document.documentElement.scrollLeft
+            reY = abY - scrollTop;  //BackCompat:document.body.scrollTop; CSS1Compat:document.documentElement.scrollTop
+  快速获取相对位置：
+  var reX= this.getBoundingClientRect().left;
+  var reY =this.getBoundingClientRect().top;
+   
+   
+   
+//以下计算绝对位置
+1) offsetTop和offsetLeft属性，表示该元素的左上角与父容器（offsetParent对象）左上角的距离;
+2) offsetParent属性返回一个对象的引用，这个对象是距离调用offsetParent的元素最近的，并且是已进行过CSS定位的容器元素
+  (position:relative/absolute/fixed)。如果这个容器元素未进行CSS定位, 则offsetParent属性的取值为根元素(在CSS1Compat模式下为html元素；
+  在BackCompat模式下为body元素)的引用。当容器元素的style.display 被设置为 "none"时（译注：IE和Opera除外），offsetParent属性 返回 null。
+3) css中垂直margin可能在一些盒模型中被折叠;
+4) 内敛元素没有垂直margin;
+5) 内敛元素中线对齐;
+6) 一个函数只能一个返回值，需要两个时定义一个新的对象，返回对象;var location = {x,y}; return location;
+
+
+
+//计算元素绝对位置
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"></meta>
+	<title>获取元素坐标</title>
+	<style type="text/css">
+		*{margin: 0;padding: 0;}
+		div{margin-left: 10px;margin-top: 20px;background-color: yellow;position: fixed;}  //position: fixed/absolute不会使垂直margin折叠;
+		ul{margin-left: 20px;margin-top: 30px;background-color: #f00;position: relative;}  //position: relative会折叠;
+		li{margin-left: 30px;margin-top: 40px;background-color: #f0e0f0;position: absolute;}
+		a{margin-left: 40px;margin-top: 50px;display: block;}
+	</style>
+</head>
+<body>
+	<div>
+		<ul>
+			<li>
+				<a href="#">啦啦啦</a>
+			</li>
+		</ul>
+	</div>
+
+	<script type="text/javascript">
+		function getPosition(element){
+			var x = element.offsetLeft;
+			var y = element.offsetTop;
+			var current = element.offsetParent;
+			console.log(current);
+			while (current !== null){
+				x += current.offsetLeft;
+				y += current.offsetTop;
+				current = current.offsetParent;
+				console.log(current);
+			}
+		    console.log(x);
+		    console.log(y);
+		    var location = {x,y};
+			  return location;
+		}
+
+		var a = document.getElementsByTagName("a")[0];
+		window.onload = function(){
+		console.log(getPosition(a));
+		}
+	</script>
+</body>
+</html>
+
+
+
+
