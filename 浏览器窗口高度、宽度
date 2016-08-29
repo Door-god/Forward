@@ -10,6 +10,15 @@ var d = document.documentElement.clientHeight;    //当前窗口可视就宽度
 var e = document.documentElement.scrollWidth;     //整个html文档宽度，含滚动条以外看不到的内容宽度
 var f = document.documentElement.scrollHeight;    //整个html文档高度，含滚动条以外看不到的内容高度
 
+如果网页内容能够在浏览器窗口中全部显示，不出现滚动条，那么网页的clientWidth和scrollWidth应该相等。但是实际上，不同浏览器有不同的处理，
+这两个值未必相等。所以，我们获取网页大小需要取它们之中较大的那个值。
+
+var width = Math.max(document.documentElement.scrollWidth, document.documentElement.clientWidth);
+var height = Math.max(document.documentElement.scrollHeight, document.documentElement.clientHeight);
+
+
+
+
 //在BackCompat下
 var a = window.innerWidth;
 var b = window.innerHeight;
@@ -18,7 +27,8 @@ var d = document.body.clientHeight;
 var e = document.body.scrollWidth;
 var f = document.body.scrollHeight;
 
-
+var width = Math.max(document.body.scrollWidth, document.body.clientWidth);
+var height = Math.max(document.body.scrollHeight, document.body.clientHeight);
 
 
 
