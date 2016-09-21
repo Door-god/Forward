@@ -1,0 +1,241 @@
+1.包含层宽度等于图片宽度，图片列表宽度等于所有图片宽度综合，左浮动。改变left值显示对应图片。
+2.JS代码中没有写obj.style之前去读obj.style会弹出一个空值，style只能获取到内联样式的具体值，而内部和外部样式无法获取到具体值，所以
+  left初始值要写在行内样式中。
+3.dom越精确样式优先级越高。ul span {background: red;}  <  ul span.selected{background: yellow;}
+4.setTimeout执行一次，setInterval一直执行。
+5.动画未完成，其他事件不触发，否则会有bug.在动画函数内标记animated=true;在其他事件前加判断if(!animated){},可以实现动画完成后事件才有效。
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>图片轮播</title>
+	<meta charset="utf-8">
+	<meta name="Keywords" content="图片轮播">
+	<meta name="Description" content="图片轮播">
+	<style>
+	  * {margin: 0;padding: 0;}
+    .container {
+    	position: relative;
+    	width: 820px;
+    	height: 460px;
+    	margin: 100px auto;
+    	overflow: hidden;
+    	text-align: center;
+    	background-color: #ddd;
+    }
+    .container ul {
+    	position: absolute;
+    	list-style: none;
+    	z-index: 1;
+    	width: 5740px;
+    }
+    .container ul li {
+    	display: inline-block;
+    	float: left;
+    }
+    .container ul li img {
+    	width: 820px;
+    	height: 460px;
+    }
+    .buttons {
+    	position: absolute;
+    	bottom: 20px;
+    	left: 377px;
+    	z-index: 2;
+    }
+    .buttons span {
+    	display: block;
+    	width: 10px;
+    	height: 10px;
+    	float: left;
+    	margin-right: 4px;
+    	border-radius: 50%;
+    	cursor: pointer;
+    	background-color: #B7B7B7;
+    }
+    .buttons span.selected {background-color: #F40;}
+    .bt-left, .bt-right {
+    	display: none;
+    	position: absolute;
+    	top: 195px;
+    	text-decoration: none;
+    	width: 30px;
+    	height: 60px;
+    	font-size: 36px;
+    	line-height: 60px;
+    	background-color: #333;
+    	color: #fff;
+    	opacity: 0.5;
+    	z-index: 2;
+    
+    }
+    .container:hover .bt-left {display: block;}
+    .container:hover .bt-right {display: block;}
+    .bt-left {left: 10px;}
+    .bt-right {	right: 10px;}
+    .bt-left:hover, .bt-right:hover {
+    	opacity: 1;
+    }
+	</style>
+</head>
+<body>
+	<div class="container">
+		<ul style="left: -820px;">
+			<li>
+				<a href="#">
+					<img src="images/5.jpg" alt="女刀">
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<img src="images/1.jpg" alt="剑圣">
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<img src="images/2.jpg" alt="卡牌">
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<img src="images/3.jpg" alt="男刀">
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<img src="images/4.jpg" alt="劫">
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<img src="images/5.jpg" alt="女刀">
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<img src="images/1.jpg" alt="剑圣">
+				</a>
+			</li>
+		</ul>
+		<div class="buttons">
+			<span class="selected"></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+		<a href="javascript:" class="bt-left" id="bt-left"><</a>
+		<a href="javascript:" class="bt-right" id="bt-right">></a>
+		
+	</div>
+
+<script type="text/javascript">
+  window.onload = function() {
+  	var container = document.getElementsByTagName("div")[0];
+  	var span = document.getElementsByTagName("span");
+  	var pre = document.getElementById("bt-left");
+  	var next = document.getElementById("bt-right");
+  	var pic = document.getElementsByTagName("ul")[0];
+  	var index = 0;
+  	var animated = false;
+  	var timer;
+  
+  	function showspan() {
+  		animated = true;
+  		for (var i = 0, j = span.length; i < j; i++) {
+  			if (span[i].className == "selected") {
+  				span[i].className = "";
+  				break;
+  			}
+  		}
+  		span[index].className = "selected";
+  	}
+  
+  	function animate(offset) {
+  		animated = true;
+  		var newleft = parseInt(pic.style.left) + offset;
+  		var speed = offset/30;
+  		function go(){
+  			if ((speed < 0 && parseInt(pic.style.left) > newleft) ||
+  				(speed > 0 && parseInt(pic.style.left) < newleft)){
+  				pic.style.left = parseInt(pic.style.left) + speed +"px";
+  				setTimeout(go, 10);
+  			}
+  			else {
+  				animated = false;
+  				pic.style.left = newleft + "px";
+  				if (newleft > -820) {
+  					pic.style.left = -4100 + "px";
+  				}
+  				else if (newleft < -4100) {
+  				pic.style.left = -820 + "px";
+  				}
+  			}
+  		}
+  		go();
+  	}
+  
+  	function play() {
+  		timer = setInterval(function(){
+  			next.onclick();
+  		}, 2000);
+  	}
+  
+  	function stop() {
+  		clearInterval(timer);
+  	}
+  
+  	pre.onclick = function() {
+  		if (!animated) {
+  			if (index == 0) {
+  				index = 4;
+  			}
+  			else {
+  				index -= 1;
+  			}
+  			showspan();
+  			animate(820);
+  		}
+  		
+  	}
+  	next.onclick = function() {
+  		if (!animated) {
+  			if (index == 4) {
+  				index = 0;
+  			}
+  			else {
+  				index += 1;
+  			}
+  			showspan();
+  			animate(-820);
+  		}
+  		
+  	}
+  
+  	for(var i = 0,j = span.length; i < j; i++) {
+  		if (this.className == "selected") {
+  			return;
+  		}
+  		else {
+  			span[i].index = i;
+  			span[i].onclick = function(){
+  				if (!animated) {
+  					var newindex = this.index;
+  					var offset = -820 * (newindex - index);
+  					index = newindex;
+  					showspan();
+  					animate(offset);
+  				}
+  			}
+  		}
+  		
+  	}
+  	container.onmouseover = stop;
+  	container.onmouseout = play;
+  }
+
+
+
+</script>	
+</body>
+</html>
