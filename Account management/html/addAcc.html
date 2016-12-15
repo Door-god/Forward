@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../iconfont/iconfont.css">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+    <link rel="stylesheet" href="../stylesheets/accMan.css">
+    <link rel="stylesheet" href="../stylesheets/addAcc.css">
+</head>
+<body>
+    <div class="header">
+    <div class="header_l">
+        <img src="../images/logo.png" alt="logo">
+        <a href="../index.html">
+            <i class="glyphicon glyphicon-user"></i>
+            账户管理
+        </a>
+    </div>
+    <div class="header_r">
+
+        <span>欢迎您：</span>
+        <a href="#">
+            <i class="glyphicon glyphicon-user"></i>
+            admin
+        </a>
+        <a href="#">
+            <i class="iconfont">&#xe600;</i>
+            退出
+        </a>
+    </div>
+</div>
+    <ol class="breadcrumb nav">
+        <li><a href="../index.html">账户管理</a></li>
+        <li class="active">添加账户</li>
+    </ol>
+    <form class="add_form form-horizontal" role="form">
+        <p class="h3">账户信息</p>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">
+                <span>*</span>
+                名称
+            </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control">
+            </div>
+            <label class="col-sm-2 control-label">
+                <span>*</span>
+                密码
+            </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">
+                <span>*</span>
+                账号类型
+            </label>
+            <div class="col-sm-10">
+                <select class="form-control select">
+                    <option value="seller">卖家</option>
+                    <option value="buyer">买家</option>
+                </select>
+            </div>
+            <label class="col-sm-2 control-label">
+                <span>*</span>
+                状态
+            </label>
+            <div class="col-sm-10">
+                <select class="form-control select">
+                    <option value="seller">启封</option>
+                    <option value="buyer">封存</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">备注:</label>
+            <textarea rows="3" class="form-control"></textarea>
+        </div>
+    </form>
+    <div class="save">
+        <button type="button">
+            <i class="iconfont">&#xe61e;</i>
+            保存
+        </button>
+    </div>
+
+    <script src="../scripts/jquery-1.11.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="../scripts/addAcc.js"></script>
+</body>
+
+
+</html>
